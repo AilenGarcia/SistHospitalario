@@ -1,0 +1,12 @@
+[
+  { "matricula": "MAT001", "password": "pass1234", "rol": "medico" },
+  { "matricula": "MAT002", "password": "secure456", "rol": "medico" },
+  { "matricula": "MAT003", "password": "pwd7890", "rol": "medico" },
+  { "matricula": "MAT004", "password": "passWord321", "rol": "medico" },
+  { "matricula": "MAT005", "password": "login123", "rol": "medico" },
+  { "matricula": "MAT006", "password": "mypassword", "rol": "medico" },
+  { "matricula": "MAT007", "password": "testpass", "rol": "medico" },
+  { "matricula": "MAT008", "password": "entry456", "rol": "medico" },
+  { "matricula": "MAT009", "password": "helloWorld", "rol": "medico" },
+  { "matricula": "MAT010", "password": "passme789", "rol": "medico" }
+]
