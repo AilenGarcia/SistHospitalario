@@ -1,5 +1,6 @@
 package gestores.menu;
 
+import enums.ETipoEmpleado;
 import exception.NotFoundException;
 import gestores.GestorUsuarios;
 import model.Usuario;
@@ -9,8 +10,8 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     GestorUsuarios gestorUsuario = new GestorUsuarios();
-    String rol = "";
-    public String menuPrincipal(){
+    ETipoEmpleado rol = null;
+    public ETipoEmpleado menuPrincipal(){
         int opcion;
 
         do {
@@ -43,8 +44,8 @@ public class Menu {
                 default:
                     System.out.println("Ingrese un numero valido... \n");
             }
-        }while(opcion !=2 && rol.isEmpty());
-        return rol.isEmpty() ? "" : rol;
+        }while(opcion !=2 && rol != null);
+        return  rol;
     }
 
     public void menuMedico(){

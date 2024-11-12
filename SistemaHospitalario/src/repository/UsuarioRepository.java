@@ -1,5 +1,6 @@
 package repository;
 
+import enums.ETipoEmpleado;
 import model.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +22,12 @@ public class UsuarioRepository {
                 Usuario auxUsu = new Usuario();
                 auxUsu.setMatricula((String) auxJson.get("matricula"));
                 auxUsu.setPassword((String) auxJson.get("password"));
-                auxUsu.setRol((String) auxJson.get("rol"));
+                String rolString = auxJson.getString("rol");
+                try {
+                    auxUsu.setRol(ETipoEmpleado.valueOf(rolString.toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Rol no válido en el JSON: " + rolString);
+                }
                 arrayUsuario.add(auxUsu);
             }
         }catch(JSONException e){

@@ -1,5 +1,6 @@
 package gestores;
 
+import enums.ETipoEmpleado;
 import exception.NotFoundException;
 import model.Usuario;
 import repository.UsuarioRepository;
@@ -11,13 +12,17 @@ import java.util.List;
 public class GestorUsuarios implements GestorBasic<Usuario>{
     UsuarioRepository repository = new UsuarioRepository();
     List<Usuario> listadoUsuarios = new ArrayList<>();
-    public boolean crear(Usuario usuario) {
+    public boolean agregar(Usuario usuario) {
         return false;
-    }
+    } //COMPLETAR
 
     public boolean eliminar(Usuario usuario) {
         return false;
-    }
+    } //COMPLETAR
+
+    public Usuario modificar(Usuario usuario) {
+        return null;
+    } //COMPLETAR
 
     public Usuario buscar(Usuario usuario) throws NotFoundException {
         if(listadoUsuarios.contains(usuario)){
@@ -27,11 +32,7 @@ public class GestorUsuarios implements GestorBasic<Usuario>{
         }
     }
 
-    public Usuario modificar(Usuario usuario) {
-        return null;
-    }
-
-    public String ingresar(Usuario user) throws NotFoundException{
+    public ETipoEmpleado ingresar(Usuario user) throws NotFoundException{
         listadoUsuarios = repository.leer();
         for (Usuario usuario : listadoUsuarios) {
             if (usuario.getMatricula().equals(user.getMatricula())

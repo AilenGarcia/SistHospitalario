@@ -1,16 +1,17 @@
 package model;
 
+import enums.ETipoEmpleado;
 import enums.Especialidad;
+import exception.NoSePudoAgregarException;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Usuario{
+public class Usuario /* extends Persona*/{
     private String matricula;
     private String password;
-    private String rol;
+    private ETipoEmpleado rol;
     private Especialidad especialidad;
-    //agergar arraylist<Paciente>
 
     public Usuario(String matricula, String password) {
         this.matricula = matricula;
@@ -18,11 +19,17 @@ public class Usuario{
     }
     public Usuario() {}
 
-    public String getRol() {
+
+    //CONSULTAR SUELDO (SIMPLEMENTE MOSTRARLO)
+    public void consultarSueldo(){
+        System.out.println("Mostrar sueldo cuando extienda de persona");
+    }
+
+    public ETipoEmpleado getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(ETipoEmpleado rol) {
         this.rol = rol;
     }
 
@@ -40,6 +47,14 @@ public class Usuario{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
     }
 
     @Override
