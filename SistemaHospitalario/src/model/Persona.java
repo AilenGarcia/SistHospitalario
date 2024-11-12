@@ -7,11 +7,11 @@ import java.util.Objects;
 public abstract class Persona {
     private String nombre;
     private String apellido;
-    private Integer dni;
+    private String dni;
     private String email;
     private EGenero genero;
 
-    public Persona(String nombre, String apellido, Integer dni, String email, EGenero genero) {
+    public Persona(String nombre, String apellido, String dni, String email, EGenero genero) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -21,7 +21,7 @@ public abstract class Persona {
     public Persona() {
         this.nombre = "Nodefinido";
         this.apellido = "Nodefinido";
-        this.dni = (Integer) 0;
+        this.dni = " ";
         this.email = "Nodefinido@gmail.com";
         this.genero = EGenero.NOBINARIO;
     }
@@ -42,11 +42,11 @@ public abstract class Persona {
         this.apellido = apellido;
     }
 
-    public Integer getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Integer dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 

@@ -1,6 +1,6 @@
 package exception;
 
-public class NoSePudoAgregarException extends RuntimeException {
+public class NoSePudoAgregarException extends Exception {
     public NoSePudoAgregarException(String message) {
         super(message);
     }

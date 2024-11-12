@@ -1,6 +1,8 @@
 package gestores;
 
-import exception.NoSePudoAgregarException;
+import enums.Especialidad;
+import exception.AccionIlegalException;
+import exception.ElementoDuplicadoException;
 import exception.NotFoundException;
 import model.Paciente;
 
@@ -9,30 +11,32 @@ import java.util.ArrayList;
 public class GestorMedicoPaciente implements GestorBasic<Paciente> {
     private ArrayList<Paciente> listadoPacientes;
 
-    //INGRESAR PACIENTE
     @Override
-    public boolean agregar(Paciente p1) {
-        try{
+    public boolean agregar(Paciente p1) throws ElementoDuplicadoException {
             if(listadoPacientes.contains(p1)){
-                throw new NoSePudoAgregarException("No se pudo agregar al paciente porque ya existe en la lista de este medico");
+                throw new ElementoDuplicadoException("No se pudo agregar al paciente porque ya existe en la lista de este medico");
             } else {
                 listadoPacientes.add(p1);
                 return true;
             }
-        } catch (NoSePudoAgregarException e) {
-            System.out.println(e.getMessage());
+    }
+
+    @Override
+    public boolean eliminar(Paciente paciente) throws NotFoundException {
+        if(!listadoPacientes.contains(paciente)){
+            throw new NotFoundException("No se encontro el paciencia a eliminar");
+        } else{
+            return listadoPacientes.remove(paciente);
         }
-        return false;
     }
 
     @Override
-    public boolean eliminar(Paciente paciente) {
-        return false;
-    }
-
-    @Override
-    public Paciente buscar(Paciente paciente) throws NotFoundException {
-        return null;
+    public boolean buscar(Paciente p) throws NotFoundException {
+            if(!listadoPacientes.contains(p)){
+                throw new NotFoundException("No se encontro el paciente");
+            }else {
+                return true;
+            }
     }
 
     //MODIFICAR PACIENTE
@@ -41,37 +45,33 @@ public class GestorMedicoPaciente implements GestorBasic<Paciente> {
         return null;
     }
 
-    //PEDIR ESTUDIO
+    public void pedirEstudio(String estudio, String dni) throws NotFoundException {
+        Paciente p = buscarByDNI(dni);
+        System.out.println("El estudio : " + estudio + " fue pedido para "+ p.getNombre());
+    }
 
+    public boolean derivar(String dni, Especialidad especialidadADerivar, Especialidad especialidadMedico) throws AccionIlegalException, NotFoundException {
+        if(especialidadMedico.equals(Especialidad.CLINICO)){
+            throw new AccionIlegalException("Solo puede derivar un medico clinico");
+        }else{
+            Paciente p = buscarByDNI(dni);
+            System.out.println("El paciente: "+p.getNombre() +"fue derivado a " + especialidadADerivar);
+            return true;
+        }
+    }
 
-    //DERIVAR (DEBE PODER HACERLO SOLAMENTE SI EL MEDICO ES CLINICO, VERIFICAR)
-
-    //AGREGAR TRATAMIENTO AL PACIENTE (CREAR ATRIBUTO TRATAMIENTO EN PACIENTE O AGREGAR COMO STRING EN HISTORIA CLINICA?)
-
-    //SOLICITAR MEDICAMENTO
     public boolean solicitarMedicamento(){
         System.out.println("Se aviso a farmacia, por favor aguarde");
         return true;
     }
 
-    //ALTA BAJA PACIENTE BOOLEAN
-
-
-    //VER PACIENTE (BUSCAR POR DNI)
-    public Paciente buscarByDNI(String dni){
-       for(Paciente p: listadoPacientes){
-           if(p.getDni().equals(dni)){
-               return p;
-           }
-       }
-       return null;
+    public Paciente buscarByDNI(String dni) throws NotFoundException {
+        for (Paciente p : listadoPacientes){
+            if(p.getDni().equals(dni)){
+                return p;
+            }
+        }
+        throw new NotFoundException("No se encontro el paciente");
     }
 
-    //VER POR HABITACION, MOSTRAR TODOS LOS PACIENTES QUE HAYA EN ELLA
-
-    //LLAMAR ENFERMERA BOOLEAN
-    public boolean llamarEnfermera(){
-        System.out.println("Se aviso a enfermeria, por favor aguarde");
-        return true;
-    }
 }

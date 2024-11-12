@@ -1,25 +1,29 @@
 package model;
 
 import enums.EPisoHospital;
+import exception.NoSePudoAgregarException;
+import exception.NotFoundException;
+
+import java.util.ArrayList;
 
 public class Habitacion {
     private boolean disponible;
     private int numeroDeHabitacion;
     private EPisoHospital piso;
-    private Paciente ocupante;
-    //AGREGAR CONTADOR PARA VER SI MANEJAMOS LA DISPPONIBILIDAD CON ESO
+    private int capacidadMax;
+    private ArrayList<Paciente> ocupantes;
 
-    public Habitacion(boolean disponible, int numeroDeHabitacion, EPisoHospital piso, Paciente ocupante) {
+    public Habitacion(boolean disponible, int numeroDeHabitacion, EPisoHospital piso) {
         this.disponible = disponible;
         this.numeroDeHabitacion = numeroDeHabitacion;
         this.piso = piso;
-        this.ocupante = ocupante;
+        this.ocupantes = new ArrayList<>();
     }
     public Habitacion() {
         this.disponible = false;
         this.numeroDeHabitacion = 0;
         this.piso = EPisoHospital.PISO1;
-        this.ocupante = null;
+        this.ocupantes = new ArrayList<>();
     }
 
     public boolean isDisponible() {
@@ -46,12 +50,24 @@ public class Habitacion {
         this.piso = piso;
     }
 
-    public Paciente getOcupante() {
-        return ocupante;
+    public void agregarPaciente(Paciente paciente) throws NoSePudoAgregarException {
+        if(ocupantes.size()<capacidadMax){
+            ocupantes.add(paciente);
+        }else {
+            throw new NoSePudoAgregarException("La habitacion esta ocupada al maximo");
+        }
     }
 
-    public void setOcupante(Paciente ocupante) {
-        this.ocupante = ocupante;
+    public void darAltaPaciente(Paciente paciente) throws NotFoundException {
+        if(ocupantes.contains(paciente)){
+            ocupantes.remove(paciente);
+        }else{
+            throw new NotFoundException("No se encontro el paciente indicado");
+        }
+    }
+
+    public ArrayList<Paciente> getOcupantes() {
+        return ocupantes;
     }
 
     @Override
@@ -60,7 +76,7 @@ public class Habitacion {
                 "disponible=" + disponible +
                 ", numeroDeHabitacion=" + numeroDeHabitacion +
                 ", piso=" + piso +
-                ", ocupante=" + ocupante +
+                ", ocupante=" + ocupantes +
                 '}';
     }
 }

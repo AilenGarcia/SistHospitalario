@@ -1,17 +1,20 @@
 package gestores.menu;
 
 import enums.ETipoEmpleado;
+import enums.Especialidad;
 import exception.NotFoundException;
 import gestores.GestorUsuarios;
 import model.Usuario;
 
+import javax.lang.model.util.ElementScanner6;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     GestorUsuarios gestorUsuario = new GestorUsuarios();
-    ETipoEmpleado rol = null;
-    public ETipoEmpleado menuPrincipal(){
+    HashMap<ETipoEmpleado, Especialidad> rol = null;
+    public HashMap<ETipoEmpleado, Especialidad>  menuPrincipal(){
         int opcion;
 
         do {
@@ -44,7 +47,7 @@ public class Menu {
                 default:
                     System.out.println("Ingrese un numero valido... \n");
             }
-        }while(opcion !=2 && rol != null);
+        }while(opcion !=2 && (rol != null && !rol.isEmpty()));
         return  rol;
     }
 

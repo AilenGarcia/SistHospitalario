@@ -1,5 +1,6 @@
 package model;
 
+import enums.EGenero;
 import enums.ETipoEmpleado;
 import enums.Especialidad;
 import exception.NoSePudoAgregarException;
@@ -7,23 +8,26 @@ import exception.NoSePudoAgregarException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Usuario /* extends Persona*/{
+public class Usuario extends Persona{
     private String matricula;
     private String password;
     private ETipoEmpleado rol;
     private Especialidad especialidad;
+
+    public Usuario(String nombre, String apellido, String dni, String email, EGenero genero, String matricula,
+                   String password, ETipoEmpleado rol, Especialidad especialidad) {
+        super(nombre, apellido, dni, email, genero);
+        this.matricula = matricula;
+        this.password = password;
+        this.rol = rol;
+        this.especialidad = especialidad;
+    }
 
     public Usuario(String matricula, String password) {
         this.matricula = matricula;
         this.password = password;
     }
     public Usuario() {}
-
-
-    //CONSULTAR SUELDO (SIMPLEMENTE MOSTRARLO)
-    public void consultarSueldo(){
-        System.out.println("Mostrar sueldo cuando extienda de persona");
-    }
 
     public ETipoEmpleado getRol() {
         return rol;
