@@ -1,7 +1,6 @@
 import enums.ETipoEmpleado;
 import enums.Especialidad;
 import gestores.menu.Menu;
-
 import java.util.HashMap;
 
 public class Main {

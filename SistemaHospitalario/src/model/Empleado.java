@@ -7,7 +7,9 @@ public class Empleado extends Persona {
     private ETipoEmpleado tipoDeEmpleado;
     private Double salario;
 
-    public Empleado(String nombre, String apellido, Integer dni, String email, EGenero genero, ETipoEmpleado tipoDeEmpleado, Double salario) {
+    public Empleado() {}
+
+    public Empleado(String nombre, String apellido, String dni, String email, EGenero genero, ETipoEmpleado tipoDeEmpleado, Double salario) {
         super(nombre, apellido, dni, email, genero);
         this.tipoDeEmpleado = tipoDeEmpleado;
         this.salario = salario;
@@ -41,4 +43,9 @@ public class Empleado extends Persona {
                 ", salario=" + salario +
                 '}';
     }
+
+//    public int consultarSueldo(Empleado empleado) {
+//        ETipoEmpleado aux = empleado.getTipoDeEmpleado();
+//        return aux.getSueldo();
+//    }
 }

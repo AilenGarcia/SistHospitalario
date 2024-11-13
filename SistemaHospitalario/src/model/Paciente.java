@@ -11,7 +11,7 @@ public class Paciente extends Persona {
     private Integer edad;
     private ETipoSangre tipoSangre;
     private ArrayList<String> enfermedades;
-    private HashMap<Integer, String> historiaClinica;
+    private HashMap<Integer, String> historiaClinica; //integer autoincremental con la cantidad de ingresos String es la razon
     private int cantIngresos;
     private boolean altaBaja;
 
@@ -60,6 +60,18 @@ public class Paciente extends Persona {
     public boolean isAltaBaja() { return altaBaja; }
 
     public void setAltaBaja(boolean altaBaja) { this.altaBaja = altaBaja; }
+
+    public void setHistoriaClinica(HashMap<Integer, String> historiaClinica) {
+        this.historiaClinica = historiaClinica;
+    }
+
+    public int getCantIngresos() {
+        return cantIngresos;
+    }
+
+    public void setCantIngresos(int cantIngresos) {
+        this.cantIngresos = cantIngresos;
+    }
 
     @Override
     public String toString() {

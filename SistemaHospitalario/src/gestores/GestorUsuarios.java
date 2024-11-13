@@ -2,6 +2,7 @@ package gestores;
 
 import enums.ETipoEmpleado;
 import enums.Especialidad;
+import exception.NoSePudoModificarException;
 import exception.NotFoundException;
 import model.Usuario;
 import repository.UsuarioRepository;
@@ -10,6 +11,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class GestorUsuarios implements GestorBasic<Usuario>{
     UsuarioRepository repository = new UsuarioRepository();
@@ -30,9 +32,26 @@ public class GestorUsuarios implements GestorBasic<Usuario>{
         }
     }
 
-    public Usuario modificar(Usuario usuario) {
-        return null;
-    } //COMPLETAR
+    //MODIFICAR CONTRASEÑA
+    public Usuario modificar(Usuario usuario) throws NoSePudoModificarException {
+        String newPassword = "";
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            if (usuario != null) {
+                System.out.println("Ingrese la nueva contraseña: ");
+                newPassword = scanner.nextLine();
+                usuario.setPassword(newPassword);
+            } else {
+                throw new NoSePudoModificarException("No se encontro el usuario a modificar");
+            }
+        }
+        catch (NoSePudoModificarException p) {
+            System.out.println(p.getMessage());
+        }
+
+        return usuario;
+    }
 
     public boolean buscar(Usuario usuario) throws NotFoundException {
         if(listadoUsuarios.contains(usuario)){
@@ -42,17 +61,20 @@ public class GestorUsuarios implements GestorBasic<Usuario>{
         }
     }
 
-    public HashMap<ETipoEmpleado, Especialidad> ingresar(Usuario user) throws NotFoundException{
+    public HashMap<ETipoEmpleado, Especialidad> ingresar(Usuario user) throws NotFoundException {
         listadoUsuarios = repository.leer();
         HashMap<ETipoEmpleado, Especialidad> credenciales = new HashMap<>();
+
         for (Usuario usuario : listadoUsuarios) {
             if (usuario.getMatricula().equals(user.getMatricula())
-                && usuario.getPassword().equals(user.getPassword())) {
-                credenciales.put(usuario.getRol(), usuario.getEspecialidad());
+                    && usuario.getPassword().equals(user.getPassword())) {
+
+                credenciales.put(usuario.getRol().getTipoDeEmpleado(), usuario.getEspecialidad());
                 return credenciales;
             }
         }
         throw new NotFoundException("Usuario no encontrado");
     }
 
+    //FALTA METODO GUARDAR DATOS
 }

@@ -14,8 +14,10 @@ public class Menu {
     Scanner scanner = new Scanner(System.in);
     GestorUsuarios gestorUsuario = new GestorUsuarios();
     HashMap<ETipoEmpleado, Especialidad> rol = null;
-    public HashMap<ETipoEmpleado, Especialidad>  menuPrincipal(){
+
+    public HashMap<ETipoEmpleado, Especialidad> menuPrincipal() {
         int opcion;
+        HashMap<ETipoEmpleado, Especialidad> rol = null;
 
         do {
             System.out.println("BIENVENIDO \n" +
@@ -29,26 +31,35 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Ingrese su matricula");
+                    System.out.println("Ingrese su matricula:");
                     var matricula = scanner.nextLine();
-                    System.out.println("Ingrese su contrasenia");
+                    System.out.println("Ingrese su contraseña:");
                     var password = scanner.nextLine();
+
                     usuario.setMatricula(matricula);
                     usuario.setPassword(password);
+
                     try {
                         rol = gestorUsuario.ingresar(usuario);
+                        if (rol != null && !rol.isEmpty()) {
+                            System.out.println("Ingreso exitoso. Bienvenido!");
+                        }
                     } catch (NotFoundException e) {
                         System.err.println("Error: " + e.getMessage());
+                        rol = null; // Aseguramos que rol sea nulo si el usuario no es encontrado
                     }
                     break;
+
                 case 2:
-                    System.out.println("Saliendo del programa...... \n");
+                    System.out.println("Saliendo del programa...");
                     break;
+
                 default:
-                    System.out.println("Ingrese un numero valido... \n");
+                    System.out.println("Ingrese un numero valido...");
             }
-        }while(opcion !=2 && (rol != null && !rol.isEmpty()));
-        return  rol;
+        } while (opcion != 2 && (rol == null || rol.isEmpty()));
+
+        return rol;
     }
 
     public void menuMedico(){
