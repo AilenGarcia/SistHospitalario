@@ -2,6 +2,7 @@ package gestores;
 
 import enums.ETipoEmpleado;
 import enums.Especialidad;
+import exception.NoSePudoAgregarException;
 import exception.NoSePudoModificarException;
 import exception.NotFoundException;
 import model.Usuario;
@@ -16,6 +17,11 @@ import java.util.Scanner;
 public class GestorUsuarios implements GestorBasic<Usuario>{
     UsuarioRepository repository = new UsuarioRepository();
     List<Usuario> listadoUsuarios = new ArrayList<>();
+
+    public List<Usuario> getListadoUsuarios() {
+        return listadoUsuarios;
+    }
+
     public boolean agregar(Usuario usuario) throws NotFoundException {
         if(!listadoUsuarios.contains(usuario)){
             throw new NotFoundException("No se encontro el usuario");
@@ -76,5 +82,17 @@ public class GestorUsuarios implements GestorBasic<Usuario>{
         throw new NotFoundException("Usuario no encontrado");
     }
 
-    //FALTA METODO GUARDAR DATOS
+    public void guardarDatosEnListado() throws NoSePudoAgregarException {
+        try {
+            listadoUsuarios = repository.leer();
+            System.out.println("Datos guardados exitosamente.");
+
+            if (listadoUsuarios.isEmpty()) {
+                throw new NoSePudoAgregarException("No se pudieron guardar los datos");
+            }
+        } catch (NoSePudoAgregarException e) {
+            System.out.println("Error al guardar los datos: " + e.getMessage());
+        }
+    }
+
 }

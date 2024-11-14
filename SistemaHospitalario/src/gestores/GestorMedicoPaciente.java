@@ -13,6 +13,10 @@ import java.util.Scanner;
 public class GestorMedicoPaciente implements GestorBasic<Paciente> {
     private ArrayList<Paciente> listadoPacientes;
 
+    public ArrayList<Paciente> getListadoPacientes() {
+        return listadoPacientes;
+    }
+
     @Override
     public boolean agregar(Paciente p1) throws ElementoDuplicadoException {
            try {
@@ -171,6 +175,5 @@ public class GestorMedicoPaciente implements GestorBasic<Paciente> {
         }
         throw new NotFoundException("No se encontro el paciente");
     }
-
 
 }
