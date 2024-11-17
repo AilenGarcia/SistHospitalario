@@ -25,6 +25,13 @@ public class Paciente extends Persona {
         this.altaBaja = altaBaja;
     }
 
+    // contructor para agregar un nuevo paciente desde el menu
+    public Paciente(String nombre, String apellido, String dni, String email, EGenero genero, Integer edad, ETipoSangre tipoSangre) {
+        super(nombre, apellido, dni, email, genero);
+        this.edad = edad;
+        this.tipoSangre = tipoSangre;
+    }
+
     public Paciente() {
         this.edad = (Integer) 0;
         this.tipoSangre = ETipoSangre.CERONEGATIVO;
@@ -75,12 +82,15 @@ public class Paciente extends Persona {
 
     @Override
     public String toString() {
-        return "Paciente{" +
-                "edad=" + edad +
-                ", tipoSangre=" + tipoSangre +
-                ", enfermedades=" + enfermedades +
-                ", historiaClinica=" + historiaClinica +
-                '}';
+        return
+                super.toString() +
+                "edad= " + edad +  "\n" +
+                "tipoSangre= " + tipoSangre +  "\n"+
+                "enfermedades= " + enfermedades + "\n" +
+                "historiaClinica= " + historiaClinica +  "\n"+
+                "cantIngresos= " + cantIngresos +  "\n" +
+                "altaBaja= " + altaBaja +  "\n"+
+                "----------------------------------------- \n ";
     }
     public boolean agregarAHistoriaClinica(String tratamiento) {
         if (tratamiento == null || tratamiento.isEmpty()) {

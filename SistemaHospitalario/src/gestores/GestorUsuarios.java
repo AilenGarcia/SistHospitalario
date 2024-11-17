@@ -5,7 +5,9 @@ import enums.Especialidad;
 import exception.NoSePudoAgregarException;
 import exception.NoSePudoModificarException;
 import exception.NotFoundException;
+import model.Paciente;
 import model.Usuario;
+import repository.PacienteRepository;
 import repository.UsuarioRepository;
 
 import java.lang.reflect.Array;
@@ -80,19 +82,6 @@ public class GestorUsuarios implements GestorBasic<Usuario>{
             }
         }
         throw new NotFoundException("Usuario no encontrado");
-    }
-
-    public void guardarDatosEnListado() throws NoSePudoAgregarException {
-        try {
-            listadoUsuarios = repository.leer();
-            System.out.println("Datos guardados exitosamente.");
-
-            if (listadoUsuarios.isEmpty()) {
-                throw new NoSePudoAgregarException("No se pudieron guardar los datos");
-            }
-        } catch (NoSePudoAgregarException e) {
-            System.out.println("Error al guardar los datos: " + e.getMessage());
-        }
     }
 
 }

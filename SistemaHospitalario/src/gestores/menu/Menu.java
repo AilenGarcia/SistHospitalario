@@ -1,6 +1,8 @@
 package gestores.menu;
 
+import enums.EGenero;
 import enums.ETipoEmpleado;
+import enums.ETipoSangre;
 import enums.Especialidad;
 import exception.AccionIlegalException;
 import exception.ElementoDuplicadoException;
@@ -9,6 +11,8 @@ import gestores.GestorMedicoPaciente;
 import gestores.GestorUsuarios;
 import model.Paciente;
 import model.Usuario;
+import repository.PacienteRepository;
+import repository.UsoJSON;
 
 import javax.lang.model.util.ElementScanner6;
 import java.util.HashMap;
@@ -66,7 +70,7 @@ public class Menu {
         return rol;
     }
 
-    public void menuMedico() throws NotFoundException, ElementoDuplicadoException, AccionIlegalException {
+    public void menuMedico(Especialidad especialidad) throws NotFoundException, ElementoDuplicadoException, AccionIlegalException {
         int opcion;
         int opcionMedico;
         int cerrarMenuSecundario = 0;
@@ -81,6 +85,8 @@ public class Menu {
             Paciente aux = new Paciente();
             GestorMedicoPaciente gestorMedicoPaciente = new GestorMedicoPaciente();
 
+            UsoJSON.cargarListaPaciente(gestorMedicoPaciente);
+
             try {
                 switch (opcion) {
                     case 1:
@@ -93,49 +99,75 @@ public class Menu {
                                     "Ingrese 4 para modificar un paciente: \n" +
                                     "Ingrese 5 para pedirle un estudio a un paciente: \n" +
                                     "Ingrese 6 para derivar a un paciente: \n" +
-                                    "Ingrese 7 para solicitarle medicamentos a un paciente: \n");
+                                    "Ingrese 7 para solicitarle medicamentos a un paciente: \n" +
+                                    "Ingrese 8 para mostrar una lista de pacientes \n");
 
                             opcionMedico = scanner.nextInt();
                             scanner.nextLine();
-                            System.out.println("Ingrese el DNI del paciente: \n");
-                            String dniPaciente = scanner.nextLine();
+                            String dniPaciente = "";
 
                             switch (opcionMedico) {
                                 case 1:
-                                    aux = gestorMedicoPaciente.buscarByDNI(dniPaciente);
-                                    gestorMedicoPaciente.agregar(aux);
+                                    aux = gestorMedicoPaciente.datosNuevoPaciente();
+                                    if (gestorMedicoPaciente.agregar(aux)) {
+                                        System.out.println("Se agrego con exito");
+                                    }
                                     break;
 
                                 case 2:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     aux = gestorMedicoPaciente.buscarByDNI(dniPaciente);
-                                    gestorMedicoPaciente.eliminar(aux);
+                                    if (gestorMedicoPaciente.eliminar(aux)) {
+                                        System.out.println("Se elimino con exito");
+                                    }
                                     break;
 
                                 case 3:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     aux = gestorMedicoPaciente.buscarByDNI(dniPaciente);
-                                    gestorMedicoPaciente.buscar(aux);
+                                    if (gestorMedicoPaciente.buscar(aux)) {
+                                        System.out.println("El paciente se encuentra en la lista de pacientes");
+                                    }
                                     break;
 
                                 case 4:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     aux = gestorMedicoPaciente.buscarByDNI(dniPaciente);
                                     gestorMedicoPaciente.modificar(aux);
                                     break;
 
                                 case 5:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     System.out.println("Ingrese el estudio solicitado: \n");
                                     String estudio = scanner.nextLine();
                                     gestorMedicoPaciente.pedirEstudio(estudio, dniPaciente);
                                     break;
 
                                 case 6:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     System.out.println("Ingrese la especialidad a la que desea derivar: \n");
-                                    Especialidad derivada = Especialidad.valueOf(scanner.nextLine());
-                                    gestorMedicoPaciente.derivar(dniPaciente, derivada, usuario.getEspecialidad());
+                                    String derivada = scanner.nextLine();
+                                    Especialidad eDerivada = Especialidad.valueOf(derivada.toUpperCase());
+                                    gestorMedicoPaciente.derivar(dniPaciente, eDerivada, especialidad);
                                     break;
 
                                 case 7:
+                                    System.out.println("Ingrese el DNI del paciente: \n");
+                                    dniPaciente = scanner.nextLine();
                                     System.out.println("Ingrese el medicamento que desea recetar: \n");
-                                    System.out.println(gestorMedicoPaciente.solicitarMedicamento());
+                                    String medicamento = scanner.nextLine();
+                                    if (gestorMedicoPaciente.solicitarMedicamento()) {
+                                        System.out.println("El medicamento se encuentra recetado");
+                                    }
+                                    break;
+
+                                case 8:
+                                    System.out.println(gestorMedicoPaciente.getListadoPacientes());
                                     break;
 
                                 default:
@@ -147,7 +179,7 @@ public class Menu {
                             cerrarMenuSecundario = scanner.nextInt();
                             scanner.nextLine();
                         } while (cerrarMenuSecundario == 1);
-
+                        UsoJSON.guardarListaPacienteEnJSON(gestorMedicoPaciente);
                         break;
 
                     case 2:
