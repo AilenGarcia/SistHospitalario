@@ -8,14 +8,14 @@ import exception.NoSePudoAgregarException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Usuario extends Persona{
+public class Usuario extends Persona {
     private String matricula;
     private String password;
-    private ETipoEmpleado rol;
+    private Empleado rol;
     private Especialidad especialidad;
 
     public Usuario(String nombre, String apellido, String dni, String email, EGenero genero, String matricula,
-                   String password, ETipoEmpleado rol, Especialidad especialidad) {
+                   String password, Empleado rol, Especialidad especialidad) {
         super(nombre, apellido, dni, email, genero);
         this.matricula = matricula;
         this.password = password;
@@ -29,11 +29,11 @@ public class Usuario extends Persona{
     }
     public Usuario() {}
 
-    public ETipoEmpleado getRol() {
+    public Empleado getRol() {
         return rol;
     }
 
-    public void setRol(ETipoEmpleado rol) {
+    public void setRol(Empleado rol) {
         this.rol = rol;
     }
 

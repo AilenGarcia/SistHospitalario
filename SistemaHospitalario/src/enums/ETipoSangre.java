@@ -8,6 +8,7 @@ public enum ETipoSangre {
     CEROPOSITIVO,
     CERONEGATIVO,
     ABNEGATIVO,
-    ABPOSITIVO;
-
+    ABPOSITIVO,
+    ONEGATIVO,
+    OPOSITIVO
 }

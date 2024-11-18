@@ -11,7 +11,7 @@ public class Paciente extends Persona {
     private Integer edad;
     private ETipoSangre tipoSangre;
     private ArrayList<String> enfermedades;
-    private HashMap<Integer, String> historiaClinica;
+    private HashMap<Integer, String> historiaClinica; //integer autoincremental con la cantidad de ingresos String es la razon
     private int cantIngresos;
     private boolean altaBaja;
 
@@ -23,6 +23,13 @@ public class Paciente extends Persona {
         this.historiaClinica = new HashMap<>();
         this.cantIngresos = 0;
         this.altaBaja = altaBaja;
+    }
+
+    // contructor para agregar un nuevo paciente desde el menu
+    public Paciente(String nombre, String apellido, String dni, String email, EGenero genero, Integer edad, ETipoSangre tipoSangre) {
+        super(nombre, apellido, dni, email, genero);
+        this.edad = edad;
+        this.tipoSangre = tipoSangre;
     }
 
     public Paciente() {
@@ -61,14 +68,29 @@ public class Paciente extends Persona {
 
     public void setAltaBaja(boolean altaBaja) { this.altaBaja = altaBaja; }
 
+    public void setHistoriaClinica(HashMap<Integer, String> historiaClinica) {
+        this.historiaClinica = historiaClinica;
+    }
+
+    public int getCantIngresos() {
+        return cantIngresos;
+    }
+
+    public void setCantIngresos(int cantIngresos) {
+        this.cantIngresos = cantIngresos;
+    }
+
     @Override
     public String toString() {
-        return "Paciente{" +
-                "edad=" + edad +
-                ", tipoSangre=" + tipoSangre +
-                ", enfermedades=" + enfermedades +
-                ", historiaClinica=" + historiaClinica +
-                '}';
+        return
+                super.toString() +
+                "edad= " + edad +  "\n" +
+                "tipoSangre= " + tipoSangre +  "\n"+
+                "enfermedades= " + enfermedades + "\n" +
+                "historiaClinica= " + historiaClinica +  "\n"+
+                "cantIngresos= " + cantIngresos +  "\n" +
+                "altaBaja= " + altaBaja +  "\n"+
+                "----------------------------------------- \n ";
     }
     public boolean agregarAHistoriaClinica(String tratamiento) {
         if (tratamiento == null || tratamiento.isEmpty()) {
